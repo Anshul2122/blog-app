@@ -10,7 +10,9 @@ const port = process.env.port || 3002;
 //env congif :
 dotenv.config(); // .env se kuch bhi get karne k liye process.env.variable name.
 //route import
+const blogRoutes = require("./routes/blogRoutes");
 const userRoutes = require("./routes/userRoutes");
+
 //mongodb connection 
 connectDB();
 //rest object :
@@ -24,6 +26,7 @@ app.use(morgan('dev'));
 
 //routes:
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/blog", blogRoutes);
 
 
 

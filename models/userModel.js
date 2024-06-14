@@ -14,6 +14,12 @@ const userSchema = new mongooes.Schema(
             type: String,
             required: [true, "password is required"],
         },
+        blogs: [
+            { 
+                type: mongooes.Types.ObjectId,
+                ref:"blog",
+            }
+        ]
     },
     { timestamps: true }
 );
