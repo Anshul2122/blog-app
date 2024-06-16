@@ -1,15 +1,28 @@
 import React,{useState} from 'react'
 import { AppBar, Toolbar, Button, Typography, Box, Tabs, Tab } from "@mui/material";
-import { Link } from 'react-router-dom';
-import { useSelector} from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from '../redux/store';
+
 function Header() {
     //global state
     const isLogin = useSelector((state) => state.isLogin);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     console.log(isLogin);
     //state
     const [value, setValue] = useState();
     const handelChange = (e,val) => {
         setValue(val);
+    }
+    const handleLogout = () => {
+        try {
+            dispatch(authActions.logout());
+            alert('logout succesfully');
+            navigate("/login");
+        } catch (error) {
+            console.log(error);
+        }
     }
     
     return (
@@ -34,7 +47,7 @@ function Header() {
                             <Button sx={{ margin: 1, color: 'white' }} LinkComponent={Link} to="/signup">Sign Up</Button>
                         </> )}
                       {isLogin && (
-                          <><Button sx={{margin:1, color:'white'}} LinkComponent={Link} to="/logout">Logout</Button></>
+                          <><Button onClick={handleLogout} sx={{margin:1, color:'white'}}>Logout</Button></>
                       )}
                   </Box>
               </Toolbar>

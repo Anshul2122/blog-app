@@ -1,8 +1,106 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
+import { Box, Typography, TextField, Button } from "@mui/material";
 
-function Signup() {
+import axios from "axios";
+const Signup = () => {
+  const navigate = useNavigate();
+  //state
+  const [inputs, setInputs] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  //handle change function
+  const handleChange = (e) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  //handle submit of form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/v1/user/signup', // data ko {} is imp to get success = true
+        {
+          username: inputs.name,
+          email: inputs.email,
+          password: inputs.password,
+        });
+      console.log(data);
+      if (data.success) {
+        alert("User Register Successfully");
+        navigate("/login");
+      }
+      else if (!data.success) { 
+        alert("user not registered");
+
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   return (
-    <div>signup</div>
+    <>
+      <form onSubmit={handleSubmit}>
+        <Box
+          maxWidth={450}
+          display={'flex'}
+          flexDirection={'column'}
+          alignItems={'center'}
+          justifyContent={'center'}
+          margin={'auto'}
+          marginTop={'5'}
+          boxShadow={'10px 10px 20px #ccc'}
+          padding={3}
+          borderRadius={5}
+        >
+          <Typography
+            variant='h4'
+            padding={3}
+            textAlign={'center'}
+            // sx={{textTransform:"uppercase"}} //optional  just register ko caps kar dega
+          >Register</Typography>
+          <TextField
+            margin='normal'
+            placeholder='enter your username'
+            value={inputs.name}
+            onChange={handleChange}
+            name='name'
+            type='text'
+            required
+          />
+          <TextField
+            margin='normal'
+            placeholder='enter your email'
+            value={inputs.email}
+            onChange={handleChange}
+            name='email'
+            text="email"
+            required
+          />
+          <TextField
+            margin='normal'
+            placeholder='enter your password'
+            value={inputs.password}
+            onChange={handleChange}
+            name='password'
+            type='password'
+            required
+          />
+          <Button type="submit"
+            sx={{borderRadius:3, marginTop:3}}
+            variant='contained' color='primary'
+          >submit</Button>
+          <Button
+            onClick={()=> navigate('/login')}
+            sx={{ textTransform: "lowercase" }}>Already resgistered? please login</Button>
+          </Box>
+        </form>
+    </>
   )
 }
 

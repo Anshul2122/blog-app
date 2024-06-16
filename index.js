@@ -4,9 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./connectDB');
-
 //port
-const port = process.env.port || 3002; 
+const port = 8080; 
 //env congif :
 dotenv.config(); // .env se kuch bhi get karne k liye process.env.variable name.
 //route import
@@ -32,4 +31,3 @@ app.use("/api/v1/blog", blogRoutes);
 
 //listen server on a port:
 app.listen(port, () => console.log(`Server Started at PORT:${port}`));
-
