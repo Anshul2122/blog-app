@@ -36,7 +36,8 @@ function Header() {
                       <Box display={'flex'} marginLeft={'auto'} marginRight={'auto'}>
                         <Tabs textColor='inherit' value={value} onChange={handelChange}>
                             <Tab label="Blogs" LinkComponent={Link} to='/Blogs' />
-                            <Tab label="My Blogs" LinkComponent={Link} to='/myBlogs' />
+                                <Tab label="My Blogs" LinkComponent={Link} to='/myBlogs' />
+                                <Tab label="create new  Blogs" LinkComponent={Link} to='/create-blog' />
                         </Tabs>
                         </Box>
                   )}
